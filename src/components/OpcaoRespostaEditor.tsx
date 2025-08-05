@@ -1,21 +1,30 @@
+
 'use client'
 
 import { Input } from './ui/input'
+import { Button } from './ui/button'
 
 interface Props {
-  valor: string
-  onChange: (valor: string) => void
+  opcoes: string[]
+  adicionarOpcao: () => void
+  atualizarOpcao: (index: number, valor: string) => void
 }
 
-export function OpcaoRespostaEditor({ valor, onChange }: Props) {
+export function OpcaoRespostaEditor({ opcoes, adicionarOpcao, atualizarOpcao }: Props) {
   return (
-    <div className="flex items-center gap-2">
-      <Input
-        className="w-full"
-        placeholder="Digite a opção"
-        value={valor}
-        onChange={(e) => onChange(e.target.value)}
-      />
+    <div className="space-y-2">
+      <h4 className="text-sm font-semibold text-gray-700">Opções de Resposta</h4>
+      {opcoes.map((opcao, index) => (
+        <Input
+          key={index}
+          placeholder={`Opção ${index + 1}`}
+          value={opcao}
+          onChange={(e) => atualizarOpcao(index, e.target.value)}
+        />
+      ))}
+      <Button variant="outline" onClick={adicionarOpcao}>
+        ➕ Adicionar Opção
+      </Button>
     </div>
   )
 }

@@ -1,50 +1,58 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Formulario, Pergunta } from './types'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from 'nanoid'
+import { TipoPergunta } from './types'
 
-interface FormularioState {
-  formularios: Formulario[]
-  formularioAtivoId?: string
-  setFormularioAtivo: (id: string) => void
-  adicionarFormulario: (titulo: string) => void
-  adicionarPergunta: (formularioId: string, pergunta: Pergunta) => void
+interface Pergunta {
+  titulo: string
+  tipo: TipoPergunta
+  obrigatoria: boolean
+  opcoes_respostas: string[]
 }
 
-export const useFormularioStore = create<FormularioState>()(
-  persist(
-    (set, get) => ({
-      formularios: [],
-      formularioAtivoId: undefined,
+interface Formulario {
+  id: string
+  titulo: string
+  perguntas: Pergunta[]
+}
 
-      setFormularioAtivo: (id) => set({ formularioAtivoId: id }),
+interface StoreState {
+  formularios: Formulario[]
+  formularioAtivoId: string | null
+  adicionarFormulario: (titulo: string) => void
+  adicionarPergunta: (payload: Pergunta & { formularioId: string }) => void
+  setFormularioAtivo: (id: string) => void
+}
+
+export const useFormularioStore = create<StoreState>()(
+  persist(
+    (set) => ({
+      formularios: [],
+      formularioAtivoId: null,
 
       adicionarFormulario: (titulo) =>
         set((state) => {
-          const novo: Formulario = {
-            id: uuidv4(),
-            titulo,
-            descricao: '',
-            ordem: state.formularios.length + 1,
-            perguntas: [],
-          }
+          const novo = { id: nanoid(), titulo, perguntas: [] }
           return {
             formularios: [...state.formularios, novo],
-            formularioAtivoId: novo.id,
+            formularioAtivoId: novo.id
           }
         }),
 
-      adicionarPergunta: (formularioId, pergunta) =>
-        set((state) => ({
-          formularios: state.formularios.map((form) =>
-            form.id === formularioId
-              ? { ...form, perguntas: [...form.perguntas, pergunta] }
-              : form
-          ),
-        }))
+      adicionarPergunta: ({ formularioId, ...pergunta }) =>
+        set((state) => {
+          const formularios = state.formularios.map((f) =>
+            f.id === formularioId
+              ? { ...f, perguntas: [...f.perguntas, pergunta] }
+              : f
+          )
+          return { formularios }
+        }),
+
+      setFormularioAtivo: (id) => set({ formularioAtivoId: id })
     }),
     {
-      name: 'formulario-storage',
+      name: 'formulario-storage' // nome da chave no localStorage
     }
   )
 )

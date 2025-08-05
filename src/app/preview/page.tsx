@@ -2,47 +2,61 @@
 
 import { useFormularioStore } from '@/lib/store'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
 
 export default function PreviewPage() {
   const { formularios, formularioAtivoId } = useFormularioStore()
   const formulario = formularios.find(f => f.id === formularioAtivoId)
 
-  if (!formulario) return <p className="text-center mt-10">Nenhum formulário selecionado.</p>
+  if (!formulario) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-500 px-4">
+        <div className="text-center space-y-2">
+          <p className="text-lg font-medium">Nenhum formulário selecionado.</p>
+          <Link href="/">
+            <Button variant="outline">← Voltar</Button>
+          </Link>
+        </div>
+      </main>
+    )
+  }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 px-4">
-      {}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <span className="text-xl">📄</span>
-          Visualizar Formulário
-        </h1>
-        <Link href="/">
-          <Button variant="outline">← Voltar</Button>
-        </Link>
-      </div>
+    <main className="min-h-screen bg-gray-100 px-4 py-10 text-gray-800">
+      <div className="max-w-3xl mx-auto space-y-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-800">Visualizar Formulário</h1>
+          <Link href="/">
+            <Button variant="outline">← Voltar</Button>
+          </Link>
+        </div>
 
-      <h2 className="text-xl font-semibold mb-2">teste {formulario.titulo}</h2>
-      <p className="text-sm text-gray-600 mb-6">Perguntas: {formulario.perguntas.length}</p>
-
-      <form className="space-y-6">
-        {formulario.perguntas.map((pergunta) => (
-          <div key={pergunta.id}>
-            <label className="block font-medium mb-1">{pergunta.texto}</label>
-            <input
-              type="text"
-              placeholder="Sua resposta"
-              className="border border-gray-300 rounded px-4 py-2 w-[600px] max-w-full"
-            />
+        <div className="bg-white border border-gray-200 rounded-md shadow-sm">
+          <div className="border-b border-gray-200 px-6 py-4 font-semibold bg-gray-50 text-lg">
+            {formulario.titulo}
           </div>
-        ))}
+          <div className="p-6 space-y-4">
+            {formulario.perguntas.length === 0 && (
+              <p className="text-sm text-gray-500">Este formulário ainda não possui perguntas.</p>
+            )}
 
-        <Button className="mt-6 flex items-center gap-2">
-          <span className="text-base">💾</span>
-          <span>Salvar Respostas</span>
-        </Button>
-      </form>
-    </div>
+            {formulario.perguntas.map((pergunta, index) => (
+              <Card key={index} className="border border-gray-200 shadow-sm">
+                <CardContent className="py-4 space-y-1">
+                  <p className="font-medium text-base">{index + 1}. {pergunta.titulo}</p>
+                  <p className="text-sm text-gray-500">
+                    Tipo: <span className="capitalize">{pergunta.tipo.replace(/_/g, ' ')}</span>
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {pergunta.obrigatoria ? 'Obrigatória' : 'Opcional'}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }
