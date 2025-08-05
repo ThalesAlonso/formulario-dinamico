@@ -114,8 +114,8 @@ src/
 
 **Thales Alonso**  
 Desenvolvedor Full Stack  
-📧 thales@email.com  
-🔗 [linkedin.com/in/seuperfil](https://linkedin.com/in/seuperfil)
+📧 alonso.thales@gmail.com  
+🔗 [linkedin.com/in/seuperfil]([https://linkedin.com/in/seuperfil](https://www.linkedin.com/in/thalesalonso/))
 
 ---
 
