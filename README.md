@@ -115,7 +115,8 @@ src/
 **Thales Alonso**  
 Desenvolvedor Full Stack  
 📧 alonso.thales@gmail.com  
-🔗 [linkedin.com/in/seuperfil]([https://linkedin.com/in/seuperfil](https://www.linkedin.com/in/thalesalonso/))
+- [![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/thalesalonsoo)](https://twitter.com/thalesalonsoo)
+- [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/thalesalonso)](https://www.linkedin.com/in/thalesalonso)
 
 ---
 
