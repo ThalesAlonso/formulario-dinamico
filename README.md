@@ -126,12 +126,8 @@ Você pode usar, modificar e distribuir este código como quiser.
 
 ---
 
-## ✅ Checklist para Avaliadores
+## ✅ Projeto
 
-- [x] README completo com instruções claras
-- [x] Instalação e execução local sem dependências externas
-- [x] Funcionalidade principal entregue conforme solicitado
-- [x] Código limpo, modular e bem estruturado
 - [x] Projeto roda em `http://localhost:3000`
 
 ---
